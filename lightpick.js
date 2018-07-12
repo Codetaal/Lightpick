@@ -80,6 +80,7 @@
         onOpen: null,
         onClose: null,
         hoveringTooltip: true,
+        verticalScroll: false,
         locale: {
             buttons: {
                 prev: '&lt;',
@@ -231,14 +232,18 @@
         var html = '',
             monthDate = moment(opts.calendar[0]);
 
+        if (opts.verticalScroll) {
+            monthDate = moment().startOf('month');
+        }
+
         for (var i = 0; i < opts.numberOfMonths; i++) {
             var day = moment(monthDate);
 
-            html += '<div class="lightpick__month">';
+            html += '<div class="lightpick__month" ' + (opts.verticalScroll ? 'data-group="' + day.format('MM-YYYY') + '"' : '') + '>';
             html += '<div class="lightpick__month-title">'
             html += '<div>' + day.toDate().toLocaleString(opts.lang, { month: 'long' }) + ' ' + day.format('YYYY')  + '</div>';
 
-            if (opts.numberOfMonths === 1) {
+            if (!opts.verticalScroll && opts.numberOfMonths === 1) {
                 html += renderTopButtons(opts);
             }
 
@@ -317,7 +322,7 @@
         self.el.className = 'lightpick lightpick--' + opts.numberOfColumns + '-columns is-hidden';
 
         self.el.innerHTML = '<div class="lightpick__inner">'
-        + (opts.numberOfMonths > 1 ? renderTopButtons(opts) : '')
+        + (!opts.verticalScroll && opts.numberOfMonths > 1 ? renderTopButtons(opts) : '')
         + '<div class="lightpick__months"></div>'
         + '<div class="lightpick__tooltip" style="visibility: hidden"></div>'
         + '</div>';
@@ -478,7 +483,11 @@
                             var dayBounding = target.getBoundingClientRect(),
                             pickerBouding = self.el.getBoundingClientRect(),
                             _left = (dayBounding.left - pickerBouding.left) + (dayBounding.width / 2),
-                            _top = dayBounding.top - pickerBouding.top;
+                            _top = dayBounding.top;
+
+                        if (opts.verticalScroll) {
+                            _top = target.offsetTop;
+                        }
 
                         tooltip.style.visibility = 'visible';
                         tooltip.textContent = days + ' ' + plural(days, opts.locale.tooltip);
@@ -840,6 +849,18 @@
                 this.updatePosition();
 
                 this.el.classList.remove('is-hidden');
+
+                if (this._opts.verticalScroll) {
+                    var selectedDay = this.el.querySelector('.is-start-date');
+
+                    if (selectedDay) {
+                        var selectedDayTimestamp = selectedDay.getAttribute('data-time');
+                        var selectedDayDate = moment(parseInt(selectedDayTimestamp)).format('MM-YYYY');
+                        var activeMonth = this.el.querySelector('[data-group="' + selectedDayDate + '"]');
+
+                        this.el.scrollTop = activeMonth.offsetTop;
+                    }
+                }
 
                 if (typeof this._opts.onOpen === 'function') {
                     this._opts.onOpen.call(this);
