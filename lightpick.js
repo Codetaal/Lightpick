@@ -80,7 +80,7 @@
         onOpen: null,
         onClose: null,
         hoveringTooltip: true,
-        verticalScroll: false,
+        verticalScrolling: false,
         locale: {
             buttons: {
                 prev: '&lt;',
@@ -232,18 +232,18 @@
         var html = '',
             monthDate = moment(opts.calendar[0]);
 
-        if (opts.verticalScroll) {
+        if (opts.verticalScrolling) {
             monthDate = moment().startOf('month');
         }
 
         for (var i = 0; i < opts.numberOfMonths; i++) {
             var day = moment(monthDate);
 
-            html += '<div class="lightpick__month" ' + (opts.verticalScroll ? 'data-group="' + day.format('MM-YYYY') + '"' : '') + '>';
+            html += '<div class="lightpick__month" ' + (opts.verticalScrolling ? 'data-group="' + day.format('MM-YYYY') + '"' : '') + '>';
             html += '<div class="lightpick__month-title">'
             html += '<div>' + day.toDate().toLocaleString(opts.lang, { month: 'long' }) + ' ' + day.format('YYYY')  + '</div>';
 
-            if (!opts.verticalScroll && opts.numberOfMonths === 1) {
+            if (!opts.verticalScrolling && opts.numberOfMonths === 1) {
                 html += renderTopButtons(opts);
             }
 
@@ -319,10 +319,10 @@
 
         self.el = document.createElement('section');
 
-        self.el.className = 'lightpick lightpick--' + opts.numberOfColumns + '-columns ' + (opts.verticalScroll ? 'lightpick--vertical-scrolling' : '') + ' is-hidden';
+        self.el.className = 'lightpick lightpick--' + opts.numberOfColumns + '-columns ' + (opts.verticalScrolling ? 'lightpick--vertical-scrolling' : '') + ' is-hidden';
 
         self.el.innerHTML = '<div class="lightpick__inner">'
-        + (!opts.verticalScroll && opts.numberOfMonths > 1 ? renderTopButtons(opts) : '')
+        + (!opts.verticalScrolling && opts.numberOfMonths > 1 ? renderTopButtons(opts) : '')
         + '<div class="lightpick__months"></div>'
         + '<div class="lightpick__tooltip" style="visibility: hidden"></div>'
         + '</div>';
@@ -485,7 +485,7 @@
                             _left = (dayBounding.left - pickerBouding.left) + (dayBounding.width / 2),
                             _top = dayBounding.top - pickerBouding.top;
 
-                        if (opts.verticalScroll) {
+                        if (opts.verticalScrolling) {
                             _top = target.offsetTop;
                         }
 
@@ -850,7 +850,7 @@
 
                 this.el.classList.remove('is-hidden');
 
-                if (this._opts.verticalScroll) {
+                if (this._opts.verticalScrolling) {
                     var selectedDay = this.el.querySelector('.is-start-date');
 
                     if (selectedDay) {
