@@ -483,7 +483,7 @@
                             var dayBounding = target.getBoundingClientRect(),
                             pickerBouding = self.el.getBoundingClientRect(),
                             _left = (dayBounding.left - pickerBouding.left) + (dayBounding.width / 2),
-                            _top = dayBounding.top;
+                            _top = dayBounding.top - pickerBouding.top;
 
                         if (opts.verticalScroll) {
                             _top = target.offsetTop;
