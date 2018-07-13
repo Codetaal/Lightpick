@@ -240,7 +240,7 @@
         for (var i = 0; i < opts.numberOfMonths; i++) {
             var day = moment(monthDate);
 
-            html += '<section class="lightpick__month">';
+            html += '<section class="lightpick__month" ' + (opts.verticalScrolling ? 'data-group="' + day.format('MM-YYYY') + '"' : '') + '>';
             html += '<header class="lightpick__month-title-bar">'
             html += '<h1 class="lightpick__month-title">' + day.toDate().toLocaleString(opts.lang, { month: 'long' }) + ' ' + day.format('YYYY')  + '</h1>';
 
@@ -902,8 +902,7 @@
             }
         },
 
-        destroy: function()
-        {
+        destroy: function(){
             var opts = this._opts;
 
             this.hide();
@@ -926,8 +925,9 @@
             }
         },
 
-        reloadOptions: function(options) {
-            this._opts = Object.assign({}, this._opts, options);
+        reinit: function(options){
+            this.destroy();
+            return new Lightpick(Object.assign({}, this._opts, options));
         }
 
     };
