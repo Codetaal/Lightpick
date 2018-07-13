@@ -107,6 +107,7 @@
     renderDay = function(opts, date, dummy, extraClass){
         if (dummy) return '<div></div>';
 
+
         var date = moment(date),
             prevMonth = moment(date).subtract(1, 'month'),
             nextMonth = moment(date).add(1, 'month');
@@ -480,7 +481,7 @@
                     var tooltip = self.el.querySelector('.lightpick__tooltip');
 
                     if (days > 0 && !target.classList.contains('is-disabled')) {
-                            var dayBounding = target.getBoundingClientRect(),
+                        var dayBounding = target.getBoundingClientRect(),
                             pickerBouding = self.el.getBoundingClientRect(),
                             _left = (dayBounding.left - pickerBouding.left) + (dayBounding.width / 2),
                             _top = dayBounding.top - pickerBouding.top;
@@ -851,18 +852,23 @@
                 this.el.classList.remove('is-hidden');
 
                 if (this._opts.verticalScrolling) {
-                    var selectedDay = this.el.querySelector('.is-end-date');
+                    var selectedDayEl = this.el.querySelector('.is-end-date');
 
-                    if (!selectedDay) {
-                        var selectedDay = this.el.querySelector('.is-start-date');
+                    if (!selectedDayEl) {
+                        selectedDayEl = this.el.querySelector('.is-start-date');
                     }
 
-                    if (selectedDay) {
-                        var selectedDayTimestamp = selectedDay.getAttribute('data-time');
-                        var selectedDayDate = moment(parseInt(selectedDayTimestamp)).format('MM-YYYY');
-                        var activeMonth = this.el.querySelector('[data-group="' + selectedDayDate + '"]');
+                    if (selectedDayEl) {
+                        var selectedDayTimestamp = selectedDayEl.getAttribute('data-time');
+                        var monthGroupId = moment(parseInt(selectedDayTimestamp)).format('MM-YYYY');
+                        var activeMonthEl = this.el.querySelector('[data-group="' + monthGroupId + '"]');
 
-                        this.el.scrollTop = activeMonth.offsetTop;
+                        if (!activeMonthEl) {
+                            monthGroupId = moment(parseInt(selectedDayTimestamp)).subtract(1, 'month').format('MM-YYYY');
+                            activeMonthEl = this.el.querySelector('[data-group="' + monthGroupId + '"]');
+                        }
+
+                        this.el.scrollTop = activeMonthEl.offsetTop;
                     }
                 }
 
