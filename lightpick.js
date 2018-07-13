@@ -107,7 +107,6 @@
     renderDay = function(opts, date, dummy, extraClass){
         if (dummy) return '<div></div>';
 
-
         var date = moment(date),
             prevMonth = moment(date).subtract(1, 'month'),
             nextMonth = moment(date).add(1, 'month');
