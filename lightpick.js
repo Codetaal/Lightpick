@@ -851,7 +851,11 @@
                 this.el.classList.remove('is-hidden');
 
                 if (this._opts.verticalScrolling) {
-                    var selectedDay = this.el.querySelector('.is-start-date');
+                    var selectedDay = this.el.querySelector('.is-end-date');
+
+                    if (!selectedDay) {
+                        var selectedDay = this.el.querySelector('.is-start-date');
+                    }
 
                     if (selectedDay) {
                         var selectedDayTimestamp = selectedDay.getAttribute('data-time');
@@ -893,14 +897,14 @@
             this.el.removeEventListener('touchend', this._onMouseDown, true);
             this.el.removeEventListener('change', this._onChange, true);
 
-            opts.field.removeEventListener('change', self._onInputChange);
-            opts.field.removeEventListener('click', self._onInputClick);
-            opts.field.removeEventListener('focus', self._onInputFocus);
+            opts.field.removeEventListener('change', this._onInputChange);
+            opts.field.removeEventListener('click', this._onInputClick);
+            opts.field.removeEventListener('focus', this._onInputFocus);
 
             if (opts.secondField) {
-                opts.secondField.removeEventListener('change', self._onInputChange);
-                opts.secondField.removeEventListener('click', self._onInputClick);
-                opts.secondField.removeEventListener('focus', self._onInputFocus);
+                opts.secondField.removeEventListener('change', this._onInputChange);
+                opts.secondField.removeEventListener('click', this._onInputClick);
+                opts.secondField.removeEventListener('focus', this._onInputFocus);
             }
 
             if (this.el.parentNode) {
@@ -908,11 +912,15 @@
             }
         },
 
-        reloadOptions: function(options) {
+        reinit: function(options) {
             var opts = this._opts;
             var newOpts = Object.assign(opts, options);
 
-            this._opts = newOpts;
+            this.destroy();
+
+            var newInstance = new Lightpick(newOpts);
+
+            return newInstance;
         }
 
     };
