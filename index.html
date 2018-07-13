@@ -7,7 +7,7 @@
     <meta name="google-site-verification" content="nERiBNqxg1sFpetHtzwMVydsumihA9YnyytsjfzYEGI" />
     <meta name="description" content="Javascript date range picker - lightweight, no jQuery. Date Range Picker can be attached to input element to pop up one or more calendars for selecting dates.">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/lightpick.css?v=0.0.9">
+    <link rel="stylesheet" type="text/css" href="css/lightpick.css?v=1.0.4">
 </head>
 <body>
     <div class="container">
@@ -34,14 +34,14 @@
                         <span class="text-secondary d-block lead">Javascript date range picker - lightweight, no jQuery</span>
                     </h1>
                     <br>
-                    <img src="https://wakirin.github.io/lightpick.gif?v=20180622" class="img-fluid" alt="Lightpick - javascript date range picker"/>
+                    <img src="https://wakirin.github.io/Lightpick_new_style.gif" class="img-fluid" alt="Lightpick - javascript date range picker"/>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-2 bg-light">
                 <div class="sticky-top pt-5">
-                    <p><a href="#installation" class="list-inline-item">Installation</a></p> 
+                    <p><a href="#installation" class="list-inline-item">Installation</a></p>
                     <p><a href="#usage" class="list-inline-item">Usage</a></p>
                     <p><a href="#examples" class="list-inline-item">Examples</a></p>
                     <p><a href="#configuration" class="list-inline-item">Configuration</a></p>
@@ -306,7 +306,7 @@
                         <li>Type: <code>String</code></li>
                         <li>Default: <code>auto</code></li>
                     </ul>
-                    <p>Language code for names of days, months  by <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString" target="_blank">Date.prototype.toLocaleString()</a>. 
+                    <p>Language code for names of days, months  by <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString" target="_blank">Date.prototype.toLocaleString()</a>.
                         'auto' will try detect user browser language.</p>
 
                     <p class="lead"><code>format</code></p>
@@ -485,6 +485,20 @@
 
                     <br>
 
+                    <p class="lead"><code>picker.toString('YYYY-MM-DD')</code></p>
+                    <p>
+                        Returns the date in a string format. 
+                    </p>
+
+                    <br>
+
+                    <p class="lead"><code>picker.reloadOptions({})</code></p>
+                    <p>
+                        Update picker options.
+                    </p>
+
+                    <br>
+
                     <p class="lead"><code>picker.show()</code></p>
                     <p>
                         Make the picker visible.
@@ -498,7 +512,7 @@
                     </p>
 
                     <br>
-                    
+
                     <p class="lead"><code>picker.destroy()</code></p>
                     <p>
                         Hide the picker and remove all event listeners.
@@ -518,7 +532,7 @@
             </div>
         </div>
     </div>
-    
+
     <script async src="https://buttons.github.io/buttons.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <script type="text/javascript" src="lightpick.js?v=0.0.9"></script>

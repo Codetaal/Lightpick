@@ -83,8 +83,8 @@
         verticalScrolling: false,
         locale: {
             buttons: {
-                prev: '&lt;',
-                next: '&gt;',
+                prev: '&leftarrow; ',
+                next: '&rightarrow; ',
                 close: '&times;',
             },
             tooltip: ['day', 'days'],
@@ -240,15 +240,15 @@
         for (var i = 0; i < opts.numberOfMonths; i++) {
             var day = moment(monthDate);
 
-            html += '<div class="lightpick__month" ' + (opts.verticalScrolling ? 'data-group="' + day.format('MM-YYYY') + '"' : '') + '>';
-            html += '<div class="lightpick__month-title">'
-            html += '<div>' + day.toDate().toLocaleString(opts.lang, { month: 'long' }) + ' ' + day.format('YYYY')  + '</div>';
+            html += '<section class="lightpick__month">';
+            html += '<header class="lightpick__month-title-bar">'
+            html += '<h1 class="lightpick__month-title">' + day.toDate().toLocaleString(opts.lang, { month: 'long' }) + ' ' + day.format('YYYY')  + '</h1>';
 
             if (!opts.verticalScrolling && opts.numberOfMonths === 1) {
                 html += renderTopButtons(opts);
             }
 
-            html += '</div>';
+            html += '</header>'; // lightpick__month-title-bar
 
             html += '<div class="lightpick__days-of-the-week">';
             for (var w = opts.firstDay + 4; w < 7 + opts.firstDay + 4; ++w) {
@@ -290,7 +290,7 @@
 
             html += '</div>'; // lightpick__days
 
-            html += '</div>'; // lightpick__month
+            html += '</section>'; // lightpick__month
 
             monthDate.add(1, 'month');
         }
@@ -321,6 +321,10 @@
         self.el = document.createElement('section');
 
         self.el.className = 'lightpick lightpick--' + opts.numberOfColumns + '-columns ' + (opts.verticalScrolling ? 'lightpick--vertical-scrolling' : '') + ' is-hidden';
+
+        if (opts.parentEl !== 'body') {
+            self.el.className += ' lightpick--inlined';
+        }
 
         self.el.innerHTML = '<div class="lightpick__inner">'
         + (!opts.verticalScrolling && opts.numberOfMonths > 1 ? renderTopButtons(opts) : '')
@@ -481,8 +485,10 @@
                     var tooltip = self.el.querySelector('.lightpick__tooltip');
 
                     if (days > 0 && !target.classList.contains('is-disabled')) {
-                        var dayBounding = target.getBoundingClientRect(),
-                            pickerBouding = self.el.getBoundingClientRect(),
+
+                        var hasParentEl = self.el.classList.contains('lightpick--inlined'),
+                            dayBounding = target.getBoundingClientRect(),
+                            pickerBouding = hasParentEl ? self.el.parentNode.getBoundingClientRect() : self.el.getBoundingClientRect(),
                             _left = (dayBounding.left - pickerBouding.left) + (dayBounding.width / 2),
                             _top = dayBounding.top - pickerBouding.top;
 
@@ -709,6 +715,8 @@
         },
 
         updatePosition: function(){
+            if (this.el.classList.contains('lightpick--inlined')) return;
+
             var rect = this._opts.field.getBoundingClientRect();
 
             this.el.style.top = (rect.bottom + window.pageYOffset) + 'px';
@@ -918,15 +926,8 @@
             }
         },
 
-        reinit: function(options) {
-            var opts = this._opts;
-            var newOpts = Object.assign(opts, options);
-
-            this.destroy();
-
-            var newInstance = new Lightpick(newOpts);
-
-            return newInstance;
+        reloadOptions: function(options) {
+            this._opts = Object.assign({}, this._opts, options);
         }
 
     };

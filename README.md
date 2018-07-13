@@ -7,7 +7,7 @@ Lightpick
 
 Javascript date range picker - lightweight, no jQuery
 -----------------------------------------------------
-![screenshot](https://wakirin.github.io/lightpick.gif?v=20180622)
+![screenshot](https://wakirin.github.io/Lightpick_new_style.gif)
 
 ## [Demo & Docs](https://wakirin.github.io/Lightpick)
 
@@ -214,7 +214,6 @@ Ex. `picker.setDisableDates([ moment().startOf('month'), ['2018-06-23', '2018-06
 
 Return current date as moment object.
 
-
 ### picker.getStartDate()
 
 Return current start of date range as moment object.
@@ -222,6 +221,14 @@ Return current start of date range as moment object.
 ### picker.getEndDate()
 
 Return current start of date range as moment object.
+
+### picker.toString('YYYY-MM-DD')
+
+Returns the date in a string format. 
+
+### picker.reloadOptions({})
+
+Update picker options.
 
 ### picker.show()
 
